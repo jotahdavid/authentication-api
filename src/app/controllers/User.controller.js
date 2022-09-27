@@ -4,6 +4,7 @@ const UserSchema = require('../schemas/User.schema');
 class UserController {
   async index(req, res) {
     const users = await UserRepository.findAll();
+
     return res.json(users);
   }
 
