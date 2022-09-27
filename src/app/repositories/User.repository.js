@@ -28,7 +28,7 @@ class UserRepository {
     const [row] = await db.query(`
       INSERT INTO ${TABLE_NAME} (name, email, password)
       VALUES ($1, $2, $3)
-      RETURNING id, name, email
+      RETURNING *
     `, [name, email, password]);
     return row;
   }
