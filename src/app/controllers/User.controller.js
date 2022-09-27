@@ -1,6 +1,12 @@
+const UserRepository = require('../repositories/User.repository');
 const UserSchema = require('../schemas/User.schema');
 
 class UserController {
+  async index(req, res) {
+    const users = await UserRepository.findAll();
+    return res.json(users);
+  }
+
   async store(req, res) {
     const validation = UserSchema.validate(req.body);
 
@@ -8,7 +14,9 @@ class UserController {
       return res.status(400).json({ error: validation.error.message });
     }
 
-    return res.status(201).json(validation.value);
+    const user = await UserRepository.create(req.body);
+
+    return res.status(201).json(user);
   }
 }
 
