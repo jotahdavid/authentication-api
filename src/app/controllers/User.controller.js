@@ -16,6 +16,11 @@ class UserController {
       return res.status(400).json({ error: error.message });
     }
 
+    const userExists = await UserRepository.findByEmail(value.email);
+    if (userExists) {
+      return res.status(400).json({ error: 'This e-mail is already in use' });
+    }
+
     const passwordHashed = await hash.make(value.password);
     value.password = passwordHashed;
 
