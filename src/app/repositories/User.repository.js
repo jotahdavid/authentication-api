@@ -1,30 +1,20 @@
-const UUID = require('uuid');
+const db = require('../../database');
 
-const users = [];
+const TABLE_NAME = 'users';
 
 class UserRepository {
   async findAll() {
-    return Promise.resolve(users.map(
-      (user) => ({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      }),
-    ));
+    const rows = await db.query(`SELECT id, name, email FROM ${TABLE_NAME}`);
+    return rows;
   }
 
   async create({ name, email, password }) {
-    return new Promise((resolve) => {
-      const newUser = {
-        id: UUID.v4(),
-        name,
-        email,
-        password,
-      };
-
-      users.push(newUser);
-      resolve(newUser);
-    });
+    const [row] = await db.query(`
+      INSERT INTO ${TABLE_NAME} (name, email, password)
+      VALUES ($1, $2, $3)
+      RETURNING id, name, email
+    `, [name, email, password]);
+    return row;
   }
 }
 
