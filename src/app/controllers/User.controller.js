@@ -1,6 +1,7 @@
-const hash = require('../../utils/hash');
 const UserRepository = require('../repositories/User.repository');
 const UserSchema = require('../schemas/User.schema');
+
+const Hash = require('../../utils/hash');
 
 class UserController {
   async index(req, res) {
@@ -13,7 +14,7 @@ class UserController {
     const { value, error } = UserSchema.validate(req.body);
 
     if (error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(422).json({ error: error.message });
     }
 
     const userExists = await UserRepository.findByEmail(value.email);
@@ -21,7 +22,7 @@ class UserController {
       return res.status(400).json({ error: 'This e-mail is already in use' });
     }
 
-    const passwordHashed = await hash.make(value.password);
+    const passwordHashed = await Hash.make(value.password);
     value.password = passwordHashed;
 
     const user = await UserRepository.create(value);

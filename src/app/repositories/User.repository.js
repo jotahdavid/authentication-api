@@ -10,7 +10,7 @@ class UserRepository {
 
   async findById(id) {
     const [row] = await db.query(`
-      SELECT id, name, email FROM ${TABLE_NAME}
+      SELECT * FROM ${TABLE_NAME}
       WHERE id = $1
     `, [id]);
     return row;
@@ -18,7 +18,7 @@ class UserRepository {
 
   async findByEmail(email) {
     const [row] = await db.query(`
-      SELECT id, name, email FROM ${TABLE_NAME}
+      SELECT * FROM ${TABLE_NAME}
       WHERE email = $1
     `, [email]);
     return row;
