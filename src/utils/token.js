@@ -11,6 +11,17 @@ const generate = (payload) => (
   })
 );
 
+const verify = (token) => (
+  new Promise((resolve, reject) => {
+    JWT.verify(
+      token,
+      process.env.SECRET_KEY,
+      (err, decoded) => (err ? reject(err) : resolve(decoded)),
+    );
+  })
+);
+
 module.exports = {
   generate,
+  verify,
 };
