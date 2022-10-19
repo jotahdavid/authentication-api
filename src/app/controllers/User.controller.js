@@ -2,6 +2,9 @@ const UserRepository = require('../repositories/User.repository');
 const UserSchema = require('../schemas/User.schema');
 
 const Hash = require('../../utils/hash');
+const Token = require('../../utils/token');
+
+const HOUR_IN_SECONDS = 3600;
 
 class UserController {
   async index(req, res) {
@@ -27,7 +30,14 @@ class UserController {
 
     const user = await UserRepository.create(value);
 
-    return res.status(201).json(user);
+    const tokenPayload = {
+      iss: 'authentication-api',
+      sub: user.id,
+      exp: Math.floor(Date.now() / 1000) + HOUR_IN_SECONDS,
+    };
+    const token = await Token.generate(tokenPayload);
+
+    return res.status(201).json({ ...user, token });
   }
 }
 
