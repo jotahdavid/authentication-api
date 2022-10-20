@@ -13,6 +13,22 @@ class UserController {
     return res.json(users);
   }
 
+  async me(req, res) {
+    const user = await UserRepository.findById(req.userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const userResponse = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    };
+
+    return res.json({ user: userResponse });
+  }
+
   async store(req, res) {
     const { value, error } = UserSchema.validate(req.body);
 
