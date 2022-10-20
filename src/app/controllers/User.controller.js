@@ -30,30 +30,31 @@ class UserController {
   }
 
   async store(req, res) {
-    const { value, error } = UserSchema.validate(req.body);
+    const { value: payload, error } = UserSchema.validate(req.body);
 
     if (error) {
       return res.status(422).json({ error: error.message });
     }
 
-    const userExists = await UserRepository.findByEmail(value.email);
+    const userExists = await UserRepository.findByEmail(payload.email);
     if (userExists) {
       return res.status(400).json({ error: 'This e-mail is already in use' });
     }
 
-    const passwordHashed = await Hash.make(value.password);
-    value.password = passwordHashed;
+    const passwordHashed = await Hash.make(payload.password);
 
-    const user = await UserRepository.create(value);
+    const user = await UserRepository.create({
+      ...payload,
+      password: passwordHashed,
+    });
 
-    const tokenPayload = {
+    const token = await Token.generate({
       iss: 'authentication-api',
       sub: user.id,
       exp: Math.floor(Date.now() / 1000) + HOUR_IN_SECONDS,
-    };
-    const token = await Token.generate(tokenPayload);
+    });
 
-    return res.status(201).json({ ...user, token });
+    return res.status(201).json({ user, token });
   }
 }
 
