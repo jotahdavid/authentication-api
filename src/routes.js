@@ -12,6 +12,7 @@ router.post('/users', UserController.store);
 
 router.get('/users/me', authMiddleware, UserController.getByToken);
 router.put('/users/me', authMiddleware, UserController.updateByToken);
+router.put('/users/me/password', authMiddleware, UserController.updatePasswordByToken);
 
 router.post('/login', AuthController.login);
 

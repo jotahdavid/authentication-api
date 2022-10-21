@@ -12,6 +12,11 @@ const UpdateUserSchema = UserSchema.keys({
   password: Joi.forbidden(),
 });
 
+const UpdateUserPasswordSchema = Joi.object({
+  oldPassword: Joi.string().min(8).required(),
+  password: Joi.string().min(8).required(),
+});
+
 class UserController {
   async index(req, res) {
     const users = await UserRepository.findAll();
@@ -84,6 +89,32 @@ class UserController {
     }
 
     const user = await UserRepository.update(req.userId, payload);
+
+    return res.json({ user });
+  }
+
+  async updatePasswordByToken(req, res) {
+    const { value: payload, error } = UpdateUserPasswordSchema.validate(req.body);
+
+    if (error) {
+      return res.status(422).json({ error: error.message });
+    }
+
+    const userExists = await UserRepository.findById(req.userId);
+    if (!userExists) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const isTheSamePassword = await Hash.compare(payload.oldPassword, userExists.password);
+    if (!isTheSamePassword) {
+      return res.status(400).json({ error: 'Password invalid' });
+    }
+
+    const passwordHashed = await Hash.make(payload.password);
+
+    const user = await UserRepository.updatePassword(req.userId, {
+      password: passwordHashed,
+    });
 
     return res.json({ user });
   }
