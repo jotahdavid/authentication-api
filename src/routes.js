@@ -9,7 +9,9 @@ const router = Router();
 
 router.get('/users', UserController.index);
 router.post('/users', UserController.store);
-router.get('/users/me', authMiddleware, UserController.me);
+
+router.get('/users/me', authMiddleware, UserController.getByToken);
+router.put('/users/me', authMiddleware, UserController.updateByToken);
 
 router.post('/login', AuthController.login);
 

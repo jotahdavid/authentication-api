@@ -1,3 +1,5 @@
+const Joi = require('joi');
+
 const UserRepository = require('../repositories/User.repository');
 const UserSchema = require('../schemas/User.schema');
 
@@ -6,27 +8,15 @@ const Token = require('../../utils/token');
 
 const HOUR_IN_SECONDS = 3600;
 
+const UpdateUserSchema = UserSchema.keys({
+  password: Joi.forbidden(),
+});
+
 class UserController {
   async index(req, res) {
     const users = await UserRepository.findAll();
 
     return res.json(users);
-  }
-
-  async me(req, res) {
-    const user = await UserRepository.findById(req.userId);
-
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    const userResponse = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-    };
-
-    return res.json({ user: userResponse });
   }
 
   async store(req, res) {
@@ -55,6 +45,47 @@ class UserController {
     });
 
     return res.status(201).json({ user, token });
+  }
+
+  async getByToken(req, res) {
+    const user = await UserRepository.findById(req.userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const userResponse = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    };
+
+    return res.json({ user: userResponse });
+  }
+
+  async updateByToken(req, res) {
+    const { value: payload, error } = UpdateUserSchema.validate(req.body);
+
+    if (error) {
+      return res.status(422).json({ error: error.message });
+    }
+
+    const userExists = await UserRepository.findById(req.userId);
+    if (!userExists) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    if (payload.email !== userExists.email) {
+      const isEmailAlreadyInUse = await UserRepository.findByEmail(payload.email);
+
+      if (isEmailAlreadyInUse) {
+        return res.status(400).json({ error: 'This e-mail is already in use' });
+      }
+    }
+
+    const user = await UserRepository.update(req.userId, payload);
+
+    return res.json({ user });
   }
 }
 
