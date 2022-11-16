@@ -1,0 +1,11 @@
+version: "2.7"
+services:
+  db:
+    image: postgres
+    restart: always
+    container_name: authentication_db
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    ports:
+      - 5432:5432
