@@ -1,9 +1,9 @@
-const { Router } = require('express');
+import { Router } from 'express';
 
-const AuthController = require('./app/controllers/Auth.controller');
-const UserController = require('./app/controllers/User.controller');
+import AuthController from '@controllers/Auth.controller';
+import UserController from '@controllers/User.controller';
 
-const authMiddleware = require('./middlewares/auth');
+import authMiddleware from '@middlewares/auth';
 
 const router = Router();
 
@@ -16,4 +16,4 @@ router.put('/users/me/password', authMiddleware, UserController.updatePasswordBy
 
 router.post('/login', AuthController.login);
 
-module.exports = router;
+export default router;

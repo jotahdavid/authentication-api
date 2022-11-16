@@ -1,6 +1,8 @@
-const Token = require('../utils/token');
+import { NextFunction, Request, Response } from 'express';
 
-module.exports = async (req, res, next) => {
+import Token from '@utils/token';
+
+export default async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {

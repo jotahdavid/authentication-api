@@ -15,6 +15,6 @@
   },
   "rules": {
     "class-methods-use-this": "off",
-    "no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
   }
 }
