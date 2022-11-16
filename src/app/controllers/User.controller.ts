@@ -1,10 +1,11 @@
-const Joi = require('joi');
+import { Request, Response } from 'express';
+import Joi from 'joi';
 
-const UserRepository = require('../repositories/User.repository');
-const UserSchema = require('../schemas/User.schema');
+import UserRepository from '@repositories/User.repository';
+import UserSchema from '@schemas/User.schema';
 
-const Hash = require('../../utils/hash');
-const Token = require('../../utils/token');
+import Hash from '@utils/hash';
+import Token from '@utils/token';
 
 const HOUR_IN_SECONDS = 3600;
 
@@ -18,13 +19,13 @@ const UpdateUserPasswordSchema = Joi.object({
 });
 
 class UserController {
-  async index(req, res) {
+  async index(req: Request, res: Response) {
     const users = await UserRepository.findAll();
 
     return res.json(users);
   }
 
-  async store(req, res) {
+  async store(req: Request, res: Response) {
     const { value: payload, error } = UserSchema.validate(req.body);
 
     if (error) {
@@ -52,7 +53,7 @@ class UserController {
     return res.status(201).json({ user, token });
   }
 
-  async getByToken(req, res) {
+  async getByToken(req: Request, res: Response) {
     const user = await UserRepository.findById(req.userId);
 
     if (!user) {
@@ -68,7 +69,7 @@ class UserController {
     return res.json({ user: userResponse });
   }
 
-  async updateByToken(req, res) {
+  async updateByToken(req: Request, res: Response) {
     const { value: payload, error } = UpdateUserSchema.validate(req.body);
 
     if (error) {
@@ -93,7 +94,7 @@ class UserController {
     return res.json({ user });
   }
 
-  async updatePasswordByToken(req, res) {
+  async updatePasswordByToken(req: Request, res: Response) {
     const { value: payload, error } = UpdateUserPasswordSchema.validate(req.body);
 
     if (error) {
@@ -120,4 +121,4 @@ class UserController {
   }
 }
 
-module.exports = new UserController();
+export default new UserController();

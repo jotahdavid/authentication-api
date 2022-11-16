@@ -1,13 +1,15 @@
-const UserRepository = require('../repositories/User.repository');
-const LoginSchema = require('../schemas/Login.schema');
+import { Request, Response } from 'express';
 
-const Hash = require('../../utils/hash');
-const Token = require('../../utils/token');
+import UserRepository from '@repositories/User.repository';
+import LoginSchema from '@schemas/Login.schema';
+
+import Hash from '@utils/hash';
+import Token from '@utils/token';
 
 const HOUR_IN_SECONDS = 3600;
 
 class AuthController {
-  async login(req, res) {
+  async login(req: Request, res: Response) {
     const { value: payload, error } = LoginSchema.validate(req.body);
 
     if (error) {
@@ -40,4 +42,4 @@ class AuthController {
   }
 }
 
-module.exports = new AuthController();
+export default new AuthController();
