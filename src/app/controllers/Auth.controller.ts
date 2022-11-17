@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import UserRepository from '@repositories/User.repository';
 import LoginSchema from '@schemas/Login.schema';
 
-import Hash from '@utils/hash';
-import Token from '@utils/token';
+import Hash from '@helpers/Hash';
+import Token from '@helpers/Token';
 
 const HOUR_IN_SECONDS = 3600;
 
