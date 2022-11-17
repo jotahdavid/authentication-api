@@ -8,7 +8,13 @@ type UpdateUserPassword = Pick<User, 'password'>;
 
 class UserRepository {
   findAll() {
-    return prisma.user.findMany();
+    return prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
   }
 
   findById(id: string) {
@@ -30,6 +36,11 @@ class UserRepository {
   create(newUser: NewUser) {
     return prisma.user.create({
       data: newUser,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
     });
   }
 

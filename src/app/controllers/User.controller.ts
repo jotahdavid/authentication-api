@@ -89,9 +89,14 @@ class UserController {
       }
     }
 
-    const user = await UserRepository.update(req.userId, payload);
+    const updatedUser = await UserRepository.update(req.userId, payload);
 
-    return res.json({ user });
+    const userResponse = {
+      ...updatedUser,
+      password: undefined,
+    };
+
+    return res.json({ user: userResponse });
   }
 
   async updatePasswordByToken(req: Request, res: Response) {
@@ -113,11 +118,16 @@ class UserController {
 
     const passwordHashed = await Hash.make(payload.password);
 
-    const user = await UserRepository.updatePassword(req.userId, {
+    const updatedUser = await UserRepository.updatePassword(req.userId, {
       password: passwordHashed,
     });
 
-    return res.json({ user });
+    const userResponse = {
+      ...updatedUser,
+      password: undefined,
+    };
+
+    return res.json({ user: userResponse });
   }
 }
 
