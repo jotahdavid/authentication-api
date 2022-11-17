@@ -1,56 +1,54 @@
-import db from '../../database';
+import { User } from '@prisma/client';
+
+import prisma from '@services/prisma';
+
+type NewUser = Omit<User, 'id'>;
+type UpdateUser = Pick<User, 'email' | 'name'>;
+type UpdateUserPassword = Pick<User, 'password'>;
 
 class UserRepository {
-  TABLE = 'users';
-
-  async findAll() {
-    const rows = await db.query(`SELECT id, name, email FROM ${this.TABLE}`);
-    return rows;
+  findAll() {
+    return prisma.user.findMany();
   }
 
-  async findById(id: string) {
-    const [row] = await db.query(`
-      SELECT * FROM ${this.TABLE}
-      WHERE id = $1
-    `, [id]);
-    return row;
+  findById(id: string) {
+    return prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
   }
 
-  async findByEmail(email: string) {
-    const [row] = await db.query(`
-      SELECT * FROM ${this.TABLE}
-      WHERE email = $1
-    `, [email]);
-    return row;
+  findByEmail(email: string) {
+    return prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
   }
 
-  async create({ name, email, password }: { name: string; email: string; password: string }) {
-    const [row] = await db.query(`
-      INSERT INTO ${this.TABLE} (name, email, password)
-      VALUES ($1, $2, $3)
-      RETURNING id, name, email
-    `, [name, email, password]);
-    return row;
+  create(newUser: NewUser) {
+    return prisma.user.create({
+      data: newUser,
+    });
   }
 
-  async update(id: string, { name, email }: { name: string; email: string }) {
-    const [row] = await db.query(`
-      UPDATE ${this.TABLE}
-      SET name = $1, email = $2
-      WHERE id = $3
-      RETURNING id, name, email
-    `, [name, email, id]);
-    return row;
+  async update(id: string, updatedUser: UpdateUser) {
+    return prisma.user.update({
+      where: {
+        id,
+      },
+      data: updatedUser,
+    });
   }
 
-  async updatePassword(id: string, { password }: { password: string }) {
-    const [row] = await db.query(`
-      UPDATE ${this.TABLE}
-      SET password = $1
-      WHERE id = $2
-      RETURNING id, name, email
-    `, [password, id]);
-    return row;
+  async updatePassword(id: string, updatedUserPassword: UpdateUserPassword) {
+    return prisma.user.update({
+      where: {
+        id,
+      },
+      data: updatedUserPassword,
+    });
   }
 }
 
