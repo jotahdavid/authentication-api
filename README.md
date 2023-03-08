@@ -31,7 +31,7 @@ Este repositório faz parte do projeto [:octocat: Authentication Project](https:
 
 - Vá até a pasta do projeto `authentication-api` e rode o comando `yarn` ou `npm install` para instalar as dependências do projeto;
 - Crie o arquivo `.env` na raíz do projeto e adicione as variáveis necessárias como mostra o arquivo `.env.example`;
-- Com as suas variáveis de ambiente configuradas e com o docker instalado, suba o container do banco de dados na sua máquina, usando o docker-compose, com o seguinte comando:
+- Com as suas variáveis de ambiente configuradas e com o docker instalado, suba o container do banco de dados na sua máquina, usando o `docker-compose`, com o seguinte comando:
   ```bash
   docker compose up -d
   ```
@@ -42,3 +42,127 @@ Este repositório faz parte do projeto [:octocat: Authentication Project](https:
 - Por fim, rode o projeto com o comando `yarn start` ou `npm start`;
 
 ## 🌐 API
+
+### Registro de Usuário **/users [POST]**
+
+- Request (application/json)
+  - Body
+    ```json
+    {
+      "name": "any_name",
+      "email": "any_email@email.com",
+      "password": "any_password"
+    }
+    ```
+
+- Response 201 (application/json)
+  - Body
+    ```json
+    {
+      "user": {
+        "id": "e4b1774f-908f-4838-9054-e82db54b95b6",
+        "name": "any_name",
+        "email": "any_email@email.com"
+      },
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoZW50aWNhdGlvbi1hcGkiLCJzdWIiOiJlNGIxNzc0Zi05MDhmLTQ4MzgtOTA1NC1lODJkYjU0Yjk1YjYiLCJleHAiOjE2NzgyODk3MTgsImlhdCI6MTY3ODI4NjExOH0.Te_YK1jjnQQqVlpZhRDLp-fnwQE3Et9NRL_idUBCKi8"
+    }
+    ```
+
+### Informação do Usuário **/users/me [GET]**
+
+- Request (application/json)
+  - Headers
+    ```
+    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoZW50aWNhdGlvbi1hcGkiLCJzdWIiOiJlNGIxNzc0Zi05MDhmLTQ4MzgtOTA1NC1lODJkYjU0Yjk1YjYiLCJleHAiOjE2NzgyODk3MTgsImlhdCI6MTY3ODI4NjExOH0.Te_YK1jjnQQqVlpZhRDLp-fnwQE3Et9NRL_idUBCKi8"
+    ```
+
+- Response 200 (application/json)
+  - Body
+    ```json
+    {
+      "user": {
+        "id": "e4b1774f-908f-4838-9054-e82db54b95b6",
+        "name": "any_name",
+        "email": "any_email@email.com"
+      },
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoZW50aWNhdGlvbi1hcGkiLCJzdWIiOiJlNGIxNzc0Zi05MDhmLTQ4MzgtOTA1NC1lODJkYjU0Yjk1YjYiLCJleHAiOjE2NzgyODk3MTgsImlhdCI6MTY3ODI4NjExOH0.Te_YK1jjnQQqVlpZhRDLp-fnwQE3Et9NRL_idUBCKi8"
+    }
+    ```
+
+### Atualizar informações básicas do Usuário **/users/me [PUT]**
+
+- Request (application/json)
+  - Headers
+    ```
+    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoZW50aWNhdGlvbi1hcGkiLCJzdWIiOiJlNGIxNzc0Zi05MDhmLTQ4MzgtOTA1NC1lODJkYjU0Yjk1YjYiLCJleHAiOjE2NzgyODk3MTgsImlhdCI6MTY3ODI4NjExOH0.Te_YK1jjnQQqVlpZhRDLp-fnwQE3Et9NRL_idUBCKi8"
+    ```
+  - Body
+    ```json
+    {
+      "name": "other_name",
+      "email": "other_email@email.com"
+    }
+    ```
+
+- Response 200 (application/json)
+  - Body
+    ```json
+    {
+      "user": {
+        "id": "e4b1774f-908f-4838-9054-e82db54b95b6",
+        "name": "other_name",
+        "email": "other_email@email.com"
+      }
+    }
+    ```
+
+### Atualizar senha do Usuário **/users/me/password [PUT]**
+
+- Request (application/json)
+  - Headers
+    ```
+    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoZW50aWNhdGlvbi1hcGkiLCJzdWIiOiJlNGIxNzc0Zi05MDhmLTQ4MzgtOTA1NC1lODJkYjU0Yjk1YjYiLCJleHAiOjE2NzgyODk3MTgsImlhdCI6MTY3ODI4NjExOH0.Te_YK1jjnQQqVlpZhRDLp-fnwQE3Et9NRL_idUBCKi8"
+    ```
+  - Body
+    ```json
+    {
+      "oldPassword": "any_password",
+      "password": "new_password"
+    }
+    ```
+
+- Response 200 (application/json)
+  - Body
+    ```json
+    {
+      "user": {
+        "id": "e4b1774f-908f-4838-9054-e82db54b95b6",
+        "name": "other_name",
+        "email": "other_email@email.com"
+      }
+    }
+    ```
+
+### Autenticar Usuário **/login [POST]**
+
+- Request (application/json)
+  - Body
+    ```json
+    {
+      "email": "other_email@email.com",
+      "password": "new_password"
+    }
+    ```
+
+- Response 200 (application/json)
+  - Body
+    ```json
+    {
+      "user": {
+        "id": "e4b1774f-908f-4838-9054-e82db54b95b6",
+        "name": "other_name",
+        "email": "other_email@email.com"
+      },
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoZW50aWNhdGlvbi1hcGkiLCJzdWIiOiJlNGIxNzc0Zi05MDhmLTQ4MzgtOTA1NC1lODJkYjU0Yjk1YjYiLCJleHAiOjE2NzgyOTA1MjIsImlhdCI6MTY3ODI4NjkyMn0.j9_HPk9MNp8MMl7KOS-AHG2FIHBgj9_XQXFZQptp4WU"
+    }
+    ```
