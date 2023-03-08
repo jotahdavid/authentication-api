@@ -64,7 +64,7 @@ Este repositório faz parte do projeto [:octocat: Authentication Project](https:
         "name": "any_name",
         "email": "any_email@email.com"
       },
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoZW50aWNhdGlvbi1hcGkiLCJzdWIiOiJlNGIxNzc0Zi05MDhmLTQ4MzgtOTA1NC1lODJkYjU0Yjk1YjYiLCJleHAiOjE2NzgyODk3MTgsImlhdCI6MTY3ODI4NjExOH0.Te_YK1jjnQQqVlpZhRDLp-fnwQE3Et9NRL_idUBCKi8"
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
     }
     ```
 
@@ -73,7 +73,7 @@ Este repositório faz parte do projeto [:octocat: Authentication Project](https:
 - Request (application/json)
   - Headers
     ```
-    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoZW50aWNhdGlvbi1hcGkiLCJzdWIiOiJlNGIxNzc0Zi05MDhmLTQ4MzgtOTA1NC1lODJkYjU0Yjk1YjYiLCJleHAiOjE2NzgyODk3MTgsImlhdCI6MTY3ODI4NjExOH0.Te_YK1jjnQQqVlpZhRDLp-fnwQE3Et9NRL_idUBCKi8"
+    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
     ```
 
 - Response 200 (application/json)
@@ -85,7 +85,7 @@ Este repositório faz parte do projeto [:octocat: Authentication Project](https:
         "name": "any_name",
         "email": "any_email@email.com"
       },
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoZW50aWNhdGlvbi1hcGkiLCJzdWIiOiJlNGIxNzc0Zi05MDhmLTQ4MzgtOTA1NC1lODJkYjU0Yjk1YjYiLCJleHAiOjE2NzgyODk3MTgsImlhdCI6MTY3ODI4NjExOH0.Te_YK1jjnQQqVlpZhRDLp-fnwQE3Et9NRL_idUBCKi8"
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
     }
     ```
 
@@ -94,7 +94,7 @@ Este repositório faz parte do projeto [:octocat: Authentication Project](https:
 - Request (application/json)
   - Headers
     ```
-    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoZW50aWNhdGlvbi1hcGkiLCJzdWIiOiJlNGIxNzc0Zi05MDhmLTQ4MzgtOTA1NC1lODJkYjU0Yjk1YjYiLCJleHAiOjE2NzgyODk3MTgsImlhdCI6MTY3ODI4NjExOH0.Te_YK1jjnQQqVlpZhRDLp-fnwQE3Et9NRL_idUBCKi8"
+    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
     ```
   - Body
     ```json
@@ -121,7 +121,7 @@ Este repositório faz parte do projeto [:octocat: Authentication Project](https:
 - Request (application/json)
   - Headers
     ```
-    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoZW50aWNhdGlvbi1hcGkiLCJzdWIiOiJlNGIxNzc0Zi05MDhmLTQ4MzgtOTA1NC1lODJkYjU0Yjk1YjYiLCJleHAiOjE2NzgyODk3MTgsImlhdCI6MTY3ODI4NjExOH0.Te_YK1jjnQQqVlpZhRDLp-fnwQE3Et9NRL_idUBCKi8"
+    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
     ```
   - Body
     ```json
@@ -163,6 +163,6 @@ Este repositório faz parte do projeto [:octocat: Authentication Project](https:
         "name": "other_name",
         "email": "other_email@email.com"
       },
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoZW50aWNhdGlvbi1hcGkiLCJzdWIiOiJlNGIxNzc0Zi05MDhmLTQ4MzgtOTA1NC1lODJkYjU0Yjk1YjYiLCJleHAiOjE2NzgyOTA1MjIsImlhdCI6MTY3ODI4NjkyMn0.j9_HPk9MNp8MMl7KOS-AHG2FIHBgj9_XQXFZQptp4WU"
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
     }
     ```
