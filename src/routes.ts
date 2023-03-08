@@ -7,7 +7,6 @@ import authMiddleware from '@middlewares/auth';
 
 const router = Router();
 
-router.get('/users', UserController.index);
 router.post('/users', UserController.store);
 
 router.get('/users/me', authMiddleware, UserController.getByToken);

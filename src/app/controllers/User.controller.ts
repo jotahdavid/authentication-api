@@ -22,12 +22,6 @@ const UpdateUserPasswordSchema = Joi.object({
 type ResponseAuthenticated<TBody = any> = Response<TBody, { user: User }>;
 
 class UserController {
-  async index(req: Request, res: Response) {
-    const users = await UserRepository.findAll();
-
-    return res.json(users);
-  }
-
   async store(req: Request, res: Response) {
     const { value: payload, error } = UserSchema.validate(req.body);
 
